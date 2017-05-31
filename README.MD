@@ -1,0 +1,15 @@
+" SOCIAL NETWORK "
+       
+FEATURES -->
+  1->REGISTRATION with your email id,LOGIN.
+  2->POST your status,pictures.
+  3->NEWS FEED.
+  4->ADD CONNECTIONS and Like their post.
+
+UPDATED FEATURES-->
+   1->Now You can comment on the post.
+   2->See the List who likes a particular post.
+
+UPCOMING FEATURE -->
+   1->Get the notifications
+

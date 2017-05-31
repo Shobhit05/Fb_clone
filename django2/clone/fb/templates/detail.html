@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+
+
+{% block title %}
+Post Detail
+{% endblock %}
+
+{% block post_div %}
+
+{% if obj.post %}
+     {% if obj.image %}
+       <p><h4 style><strong>{{obj.person|title}}</strong></h4> <h5> added a new  <a href= "{{ obj.id }}">photo </a> </h5></p>
+          {{obj.post|title}} 
+          <img src="{{ obj.image.url }}" alt="img" class="img-responsive img-rounded" height="200" width="200">
+          </h5>at </h5> 
+          {{ obj.timestamp }}
+
+     {%else%}
+       <p><h4><strong>{{obj.person|title}}</strong></h4> <h5> posted the  <a href= "{{ obj.id }}">post </a> </h5></p>{{obj.post|title}} </h5>at </h5> 
+       {{ obj.timestamp }}
+     {%endif%}
+
+{%else %}
+       <p><h4><strong>{{obj.person|title}}</strong></h4> <h5> added a new  <a href= "{{ obj.id }}">photo </a> </h5></p>
+       {% if obj.image %}
+       <img src="{{ obj.image.url }}" alt="img" class="img-responsive img-rounded" height="200" width="200">
+       </h5>at </h5> 
+          {{ obj.timestamp }}
+
+{% endif %}
+{% endif %}
+<br>
+{% for key,values in liking.items %}
+{% if key == obj.id %}
+{% if values == 1 %}
+<a href={% url 'unlikefromdetail' obj.id %}> Unlike ({{ obj.like }})</a>
+{%else%}
+<a href={% url 'likefromdetail' obj.id %}> Like ({{ obj.like }})</a>
+{%endif%}
+{%endif%}
+
+{%endfor%}
+
+<form method="POST" action='#' enctype='multipart/form-data' >{% csrf_token %}
+
+
+{{commentform|crispy}}
+
+
+
+<br>
+<input type="submit" value="POST" class='btn btn-primary'>
+</form>
+
+
+
+<br>
+
+{% if comments %}
+
+  {% for i in comments %}
+
+  <a href={% url 'profile' i.person_id %} >{{i.person }} </a>  comment the following {{i.comment }} 
+  <br>
+
+    {%endfor%}
+
+
+{%endif%}
+
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %}
+Profile {{ name }}
+{% endblock %}
+
+
+{% block post_div %}
+
+{% for i in query %}
+
+
+
+
+{%if i.profilepic %}
+<img src="{{ i.profilepic.url }}" alt="img" class="img-responsive img-rounded" height="200" width="200">
+
+{% endif %}
+
+<h6>Name:- {{ i.First_name }} {{ i.Last_name }}
+<br>
+<h6>Sex:-{{i.sex}}
+
+
+<h6>On Earth Since:-{{i.birthdate }}
+
+<br>
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,155 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title> {%block title%}   {%endblock%}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+</head>
+
+
+
+<body>
+<nav class="navbar navbar-inverse" style="background-color: #008080">
+  <div class="container-fluid">
+    <div class="navbar-header">
+   
+
+
+      
+    </div>
+    <ul class="nav navbar-nav">
+    {%for i in profilepic %}
+    <li><a class="navbar-brand" href= {% url 'myprofile' %} style="color:white;font-weight: bold"> {{request.user|title}}</a></li>
+  
+      {%if i.profilepic%}
+          <li><img src="{{ i.profilepic.url }}" alt="img" style="position: relative;top:10px" class="img-responsive img-rounded" height="30" width="30">
+      
+      {%if not i.profilepic%}
+           <li><a href={% url 'profile' i.id %}" style="color:white;font-weight: bold;"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+      {%endif%}
+      {%endif%}
+  
+  {%endfor %}
+
+
+   
+  
+  
+    </li>
+      <li><a href="{% url 'index' %}" style="color:white;font-weight: bold;">Home</a></li>
+      <li><a href="{% url 'index' %}" style="color:white;font-weight: bold;"><span style="margin-right:0.4em;" class="glyphicon glyphicon-user"></span>Friends</a></li>
+     
+    </ul>
+    <form class="navbar-form navbar-left">
+      <div class="form-group">
+        <input type="text" class="form-control"  placeholder="Search" style="padding-right:90px;">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+    
+
+    {%if request.user.is_authenticated %}
+     <li><a href="#" style="color:white;font-weight: bold"><span class ="glyphicon glyphicon-globe" style="margin-right: 0.4em;"></span>Notifications</a></li>
+ 
+    
+    <li><a href="{% url 'auth_logout' %}" style="color:white;font-weight: bold"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      
+      {%else %}
+      
+      <li><a href="{% url 'registration_register' %}"style="color:white;font-weight: bold"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+       <li><a href="{% url 'auth_login' %}"style="color:white;font-weight: bold"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+
+       {%endif%}
+    
+    </ul>
+  </div>
+</nav>
+ 
+
+  </head>
+
+
+
+
+
+<body>
+
+
+
+
+
+      <div class="jumbotron" >
+      <div class="container-fluid">
+
+      <div class="row">
+
+
+      <!--- ------------------------------------------------ FRIENDS SUGGESTION ------------------------------------------>
+ 
+   <div class="col-md-3" style="padding-bottom:80px;">
+
+ 
+    {% block friend_div %}
+
+        {%endblock%}
+
+        </div>
+
+<!-------------------------------------------------POST DIVISION--------------------------------------------------- -->
+
+ <div class="col-md-6">
+
+
+ {% block post_div %}
+
+
+
+ {%endblock%}
+ 
+
+</div>
+
+<div class ="col-md-3">
+
+
+          {% block div_third %}
+
+
+
+          {% endblock %}
+
+
+
+</div>
+
+  
+        
+
+        </p>
+      </div>
+
+    </div>
+    </div>
+
+
+
+
+
+</body>
+</head>
+</html>
+
+    
+   
+  

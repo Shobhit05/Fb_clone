@@ -1,0 +1,41 @@
+{% load crispy_forms_tags %}
+<html>
+<head>
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<body>
+<style>
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+
+
+</style>
+
+
+
+<div>
+<h1 style="text-align:center";><strong>Sign In</strong></h1>
+<form class="form-signin" method='POST' > {% csrf_token %}
+
+ {{ form|crispy}} 
+
+<input class='btn btn-primary' type="submit"  Value="SIGN In"/>
+</form> 
+
+</div>
+
+<div class="col-md-12">
+<a href="{% url 'registration_register' %}"><strong><h1 style="text-align:center">Register Here</h1><strong></strong> </a>
+
+</body>
+
+</html> 

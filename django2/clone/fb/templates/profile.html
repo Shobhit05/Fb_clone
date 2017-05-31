@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %}
+Profile {{request.user }}
+{% endblock %}
+
+
+{% block post_div %}
+
+<style type="text/css">
+label
+{   display: none;
+	
+	
+}
+
+
+input[type="file"]
+{
+   border:1px solid #ffffff;
+	padding: 6px;
+	border-radius: 2px;
+	background-color: white;
+	color:grey;
+
+ 
+}
+
+
+
+
+</style>
+
+
+<form method="POST" action='' enctype='multipart/form-data'>{%csrf_token %}
+
+
+{{form2|crispy}}
+
+
+
+<br>
+<input type="submit" value="POST" class='btn btn-primary'>
+</form>
+
+{% for i in query %}
+
+{% if i.coverpic %}
+
+<img src="{{ i.coverpic.url }}" alt="img" class="img-responsive img-rounded" height="200" width="200">
+
+
+{%endif%}
+
+
+
+{%if i.profilepic %}
+
+<img src="{{ i.profilepic.url }}" alt="img" class="img-responsive img-rounded" height="200" width="200">
+<form method="POST" action='' enctype='multipart/form-data'>{%csrf_token %}
+
+{{form|crispy}}
+
+
+<br>
+
+<input type="submit" value="POST" class='btn btn-primary'>
+</form>
+{%else %}
+<form method="POST" action='' enctype='multipart/form-data'>{%csrf_token %}
+
+
+{{form|crispy}}
+
+
+
+<br>
+<input type="submit" value="POST" class='btn btn-primary'>
+</form>
+
+{% endif %}
+<h6>Name:- {{ i.First_name|title }} {{ i.Last_name|title }}
+<br>
+<h6>Sex:-{{i.sex}}
+
+
+<h6>On Earth Since:-{{i.birthdate }}
+
+<br>
+{% endfor %}
+
+
+{% endblock %}

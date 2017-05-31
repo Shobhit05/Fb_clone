@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Welcome to Facebook
+{% endblock %}
+
+
+
+
+
+<!------------------------------------------------- FRIENDS SUGESSTION ------------------------------ -->
+
+
+{%block friend_div %}
+
+
+<ul class="list-group" style="padding-top:14px;">
+{% if b %}
+<li class="list-group-item" style="color:black;font-weight: bold; background-color:#536772;"><h5>Friends Suggestion <span class="glyphicon glyphicon-user"></span></h5></li>
+</ul>
+{%endif%}
+<ul class="list-group">
+{%for i in b%}
+ <li class="list-group-item" style="color:black;font-weight: bold;">
+   {% if i.profilepic %}
+
+       <img src="{{ i.profilepic.url }}" alt="img" class="img-responsive img-rounded" height="20" width="20">
+   {%else%}
+         <a href={% url 'profile' i.id %}" ><span class="glyphicon glyphicon-user"></span></a>
+   {%endif %}
+   
+   <a href={% url 'profile' i.id %}> {{i|title}} </a>
+    <a href={% url 'addfriend' i.username %} > Add </a>
+ </li>
+ </ul>
+<br>
+{%endfor%}
+
+
+
+<!------------------------------------------------- PENDING REQUEST ------------------------------ -->
+<ul class="list-group">
+{%if pendingrequest%}
+<li class="list-group-item" style="color:black;font-weight: bold; background-color:#536772"><h5>Pending Requests <span class="glyphicon glyphicon-user"></span></h5></li>
+{%endif%}
+</ul>
+<ul class="list-group">
+{% for i in pendingrequest %}
+ <li class="list-group-item" style="color:black;font-weight: bold;">
+{% if i.profilepic %}
+       <img src="{{ i.profilepic.url }}" alt="img" class="img-responsive img-rounded" height="20" width="20">
+   {%else%}
+         <a href={% url 'profile' i.id %}" ><span class="glyphicon glyphicon-user"></span></a>
+   {%endif %}
+   <a href={% url 'profile' i.id %}> {{i|title}} </a>
+    <a href={% url 'cancelrequest' i.username %} > Cancel </a>
+ </li>
+ </ul>
+<br>
+{%endfor%}
+
+
+
+
+<!------------------------------------------------- FRIEND REQUEST ------------------------------ -->
+
+<ul class="list-group">
+{%if requests%}
+<li class="list-group-item" style="color:black;font-weight: bold; background-color:#536772"><h5>User requests <span class="glyphicon glyphicon-user"></span></h5></li>
+{%endif%}
+</ul>
+<ul class="list-group">
+{% for i in requests %}
+<li class="list-group-item" style="color:black;font-weight: bold;">{{ i.person|title }} wants to be ur friend<br>
+<a style="padding-right: 20px;" href={% url 'acceptfriend' i.person %}><BUTTON> Add </BUTTON> </a>
+<a href={% url 'cancelrequest' i.person %} ><BUTTON>Delete </BUTTON></a></li>
+</ul>
+<br>
+{% endfor %}
+
+
+
+
+{%endblock%}
+
+<!------------------------------------------------- FRIEND LIST ------------------------------ -->
+{% block div_third %}
+
+
+<ul class="list-group" style="padding-top:12px;">
+
+{% if c %}
+<li class="list-group-item" style="color:black;font-weight: bold; background-color:#536772"><h5>Friends {{total}}<span class="glyphicon glyphicon-user"></span></h5></li>
+</ul>
+
+<ul class="list-group">
+{% for i in c%}
+<li class="list-group-item" style="color:black;font-weight: bold;">
+{% if i.profilepic %}
+     <img src="{{ i.profilepic.url }}" alt="img" class="img-responsive img-rounded" height="20" width="20">
+{%else%}
+         <a href={% url 'profile' i.id %}" ><span class="glyphicon glyphicon-user"></span></a>
+
+{%endif %}
+<a href={% url 'profile' i.id %} > {{i|title}} </a>
+<a href={% url 'unfriend' i.username %}> Remove </a>
+</li>
+</ul>
+<br>
+{%endfor%}
+{%endif%}
+
+{%endblock%}
+
+<! ---------------------------------------------------POST_DIVISION ----------------------------------------- ->
+{% block post_div %}
+
+ 
+<div style="background-color:white">
+
+<form id="form1" method="POST" action='' enctype='multipart/form-data' style="padding-left: 14px;" >{%csrf_token %}
+
+
+{{form|crispy}}
+
+
+
+<br>
+<input type="submit" value="POST" id="submit1" class='btn btn-primary'>
+</form>
+
+
+
+
+{{ block.super }}
+<br>
+</div>
+
+
+{% for i in query1 %}
+
+
+<div style="background-color:white;padding-left:10px; border-radius:4px;">
+
+{% for url in profileimgurl %}
+
+
+{% if url.0 == i.person %}
+<h6>
+<img  src="{{ url.1 }}" alt="img" style="padding-top:15px" height="50" width="35">
+</h6>
+
+{%else%}
+
+<h2></h2>
+
+{%endif%}
+
+
+{% endfor %}
+{% if i.post %}
+     
+     
+     {% if i.image %}
+     
+
+       <h4 style="display:inline;padding-right:08px;"><strong>{{i.person|title}}</strong></h4><h5 style="display: inline;">added a </h5> <a style="display: inline-block;" href= "{{ i.id }}">photo </a>
+
+       <h5 style=" padding-left: 200px; display: inline-block;"><strong> {{i.timestamp }}</strong></h5>
+
+    
+
+       
+          <h4 style=" word-wrap: break-word; padding-left:0px;"> {{i.post|title}} </h4>
+          <img src="{{ i.image.url }}" alt="img" style="margin-left:0px;margin-bottom:5px;" class="img-responsive img-rounded" height="100" width="300">
+          </h5> 
+
+
+          {% for key,values in liking.items %}
+           {% if key == i.id %}
+             {% if values == 1 %}
+                  <a href={% url 'unlike' i.id %}>  <h5 style="padding-left: 0px;  display: inline-block;">Unlike </h5></a>
+              {%else%}
+                    <a href={% url 'like' i.id %}> <h5 style="padding-left: 0px; display: inline-block;"> Like </h5></a>
+              {%endif%}
+              {%endif%}
+             {%endfor%}
+             
+
+  {%else%}
+       
+
+        <h4 style="display: inline; padding-right:08px;"><strong>{{i.person|title}}</strong></h4><h5 style="display: inline;"> posted the  <a href= "{{ i.id }}">post </a> </h5>
+
+        <h5 style=" padding-left: 200px; display: inline-block;"><strong> {{i.timestamp }}</strong></h5>
+    
+
+        <h4 style="word-wrap: break-word;">{{i.post|title}}</h4>
+
+          {% for key,values in liking.items %}
+           {% if key == i.id %}
+             {% if values == 1 %}
+                  <a href={% url 'unlike' i.id %}>  <h5 style="display: inline-block;">Unlike </h5></a>
+              {%else%}
+                    <a href={% url 'like' i.id %}> <h5 style="display: inline-block;"> Like </h5></a>
+          {%endif%}
+         {%endif%}
+          {%endfor%} 
+
+
+     {%endif%}
+
+
+{%else %}
+
+
+       <h4 style="display: inline; padding-right:08px;"><strong>{{i.person|title}}</strong></h4><h5 style="display: inline;">added a new  <a href= "{{ i.id }}">photo </a> </h5>
+        <h5 style=" padding-left: 170px; display: inline-block;"><strong> {{i.timestamp }}</strong></h5>
+       
+
+
+{% if i.image %}
+
+
+       <img src="{{ i.image.url }}" style="margin-left:0px;" alt="img" class="img-responsive img-rounded" height="200" width="200">
+       {% for key,values in liking.items %}
+           {% if key == i.id %}
+             {% if values == 1 %}
+                  <a href={% url 'unlike' i.id %}>  <h5  style=" padding-left: 0px;display: inline-block;">Unlike  </h5></a>
+              {%else%}
+                    <a href={% url 'like' i.id %}> <h5  style=" padding-left: 0px; display: inline-block;"> Like  </h5></a>
+          {%endif%}
+         {%endif%}
+          {%endfor%} 
+
+
+{% endif %}
+
+
+{%endif%}
+
+<!-- #--------------------------------------------------Showing The Person Liked Modal CLass -------------------->
+
+{% for key,values in dic.items %}
+    {% if key == i.id%}
+<a href="#" data-toggle="modal" data-target="#{{key}}""> <h5  style=" padding-left: 0px; display: inline-block;">({{ i.like }})</h5></a>
+
+  <div class="modal fade" id="{{key}}" tabindex="-1" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog">
+ 
+    <div class="modal-dialog" >
+    
+      <div class="modal-content" >
+
+        <div class="modal-header" >
+          <button type="button" class="close" id="6" data-dismiss="modal"><span aria-hidden ="true"> &times;</span><span class="sr-only">Close </span></button>
+          
+          <h4 style="display: inline;padding-left:0px; " class="modal-title">Person Liked</h4>
+          <h4 style="display: inline; padding-left:380px;" class="modal-title">Status</h4>
+          
+
+          
+        </div>
+       
+
+        {% for k in values %}
+        <div class="col-md-12">
+        <h5><strong><a href= {% url 'profile' k.0 %} >{{k.1|title}} </a></strong></h5>
+
+        </div>
+        {%endfor%}
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        
+   
+      
+      </div>
+      </div>
+
+    </div>
+    
+  
+ <a style=" padding-left: 20px; display: inline-block;" href= "{{ i.id }}">Comment () </a>
+  
+  <br>
+{%endif%}
+
+{%endfor%}
+
+
+
+
+
+</div>
+
+{%endfor %}
+<br>
+<!-- <script>
+$("#submit1").click(function(event){
+  event.preventDefault();
+  var formData= $("#form1").serialize();
+  console.log(formData);
+  $.ajax({
+    type:"POST",
+    url:"{% url 'index' %}",
+    data:formData,
+    success: function(data){
+      console.log(data)
+      $("#form1")[0].reset();
+      
+
+    },
+    error:function(response,error){
+      console.log(response)
+      console.log(error)
+    }
+  })
+})
+
+
+
+</script>  
+ -->
+
+
+
+
+
+{% endblock %}
+
