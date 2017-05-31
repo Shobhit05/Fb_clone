@@ -8,7 +8,7 @@ FEATURES -->
 
 UPDATED FEATURES-->
    1->Now You can comment on the post.
-   2->See the List who likes a particular post.
+   2->See the Uses List who likes a particular post.
 
 UPCOMING FEATURE -->
    1->Get the notifications
