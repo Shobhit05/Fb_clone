@@ -38,6 +38,7 @@ def index(request):
 
 
 #---------------------------------SAVING THE DATABASE NORMALLY ------------------------------------------#
+
 	if request.user.is_authenticated():
 
 		if form.is_valid():
@@ -291,65 +292,7 @@ def myprofile(request):
 
 
 
-def like(request,id):
-	obj1=LikePost.objects.filter(person=request.user,post_id=id)
-	obj=Post.objects.get(id=id)
-	like=LikePost.objects.filter(person=request.user)
-	if not len(obj1) == 1:
-		C=LikePost(post_id=id,person=request.user)
-		C.save()
-		obj.like=obj.like+1
-	 	obj.save()
-	 	return redirect("index")
-	# q=Connection.objects.all().filter(user=request.user)
-	# liking={}
-	# postsort=[]
-	# for i in q:
-	# 	postsort=chain(postsort,(Post.objects.filter(person=i)))
-		 	
-	# 	postsort=chain(postsort,(Post.objects.filter(person=request.user)))
-	# 	postsort=sorted(postsort,key=attrgetter('timestamp'))
-	# 	for i in postsort:
-	# 		q=bool(LikePost.objects.filter(post_id=i.id,person=request.user))
-	# 		if q ==True:
-	# 			liking[i.id]=1
-	# 		else:
-	# 			liking[i.id]=0
 
-
-
-def likefromdetail(request,id):
-	obj1=LikePost.objects.filter(person=request.user,post_id=id)
-	obj=Post.objects.get(id=id)
-	like=LikePost.objects.filter(person=request.user)
-	if not len(obj1) == 1:
-		C=LikePost(post_id=id,person=request.user)
-		C.save()
-		obj.like=obj.like+1
-	 	obj.save()
-	 	return redirect("detail",id)
-
-
-
-def unlike(request,id):
-	obj1=LikePost.objects.filter(person=request.user,post_id=id)
-	obj=Post.objects.get(id=id)
-	q=Connection.objects.all().filter(user=request.user)
-	if obj1:
-		obj1.delete()
-		obj.like=obj.like-1
-	 	obj.save()
-	 	return redirect("index")
-
-def unlikefromdetail(request,id):
-	obj1=LikePost.objects.filter(person=request.user,post_id=id)
-	obj=Post.objects.get(id=id)
-	q=Connection.objects.all().filter(user=request.user)
-	if obj1:
-		obj1.delete()
-		obj.like=obj.like-1
-	 	obj.save()
-	 	return redirect("detail",id)
 	
 
 
@@ -363,50 +306,7 @@ def profile1(request,pk):
 	return render(request,"profile1.html",context)
 
 
-def addfriend(request,friend):
-	if not Connection.objects.filter(user=request.user,friend=friend):
-		if not Addrequest.objects.filter(person=request.user,requests=friend ):
-			if not Addrequest.objects.filter(person=friend,requests=request.user):
-				C=Addrequest(person=request.user,requests=friend)
-				C.save()
-	
-	return redirect("index")
 
-def accept(request,addfriend):
-	if not Connection.objects.filter(user=request.user,friend=addfriend):
-		
-		C=Connection(user=request.user,friend=addfriend)
-		C.save()
-		D=Connection(user=addfriend,friend=request.user)
-		D.save()
-		d=Addrequest.objects.filter(person=addfriend,requests=request.user)
-		d.delete()
-	
-	return redirect("index")
-
-
-
-
-
-
-def unfriend(request,name):
-	obj1=Connection.objects.filter(user=request.user,friend=name)
-	obj2=Connection.objects.filter(user=name,friend=request.user)
-	obj1.delete()
-	obj2.delete()
-
-	return redirect("index")
-
-def cancelrequest(request,name):
-	obj1=Addrequest.objects.filter(person=name,requests=request.user)
-	if obj1:
-
-		obj1.delete()
-	else:
-		obj1=Addrequest.objects.filter(person=request.user,requests=name)
-		obj1.delete()
-
-	return redirect("index")
 
 
 def edit_favorites(request):

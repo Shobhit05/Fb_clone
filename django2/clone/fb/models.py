@@ -89,7 +89,7 @@ class LoginDetail(models.Model):
 class Notification(models.Model):
 	content=models.CharField(max_length=120)
 	person_id=models.IntegerField()
-	post_id=models.IntegerField()
+	post_id=models.IntegerField(null=True)
 	timestamp=models.DateTimeField(auto_now_add=True ,auto_now=False)
 	updated=models.DateTimeField(auto_now_add=False ,auto_now=True)
 
