@@ -25,7 +25,6 @@ def index(request):
 	form=PostForm(request.POST or None,request.FILES or None)
 
 
-
 #--------------------------------SAVING THE DATABASE USING AJAX -------------------------------------------#	
 	# if request.is_ajax():
 	# 	post=request.POST.get("post")
@@ -57,7 +56,12 @@ def index(request):
 		if not name:
 			form1=Update(request.POST or None)
 			if form1.is_valid():
-				c=Person(username=request.user,First_name=form1.cleaned_data["First_name"],Last_name=form1.cleaned_data["Last_name"],sex=form1.cleaned_data["sex"],birthdate=form1.cleaned_data["birthdate"])
+				c=Person(username=request.user,
+					First_name=form1.cleaned_data["First_name"],
+					Last_name=form1.cleaned_data["Last_name"],
+					sex=form1.cleaned_data["sex"],
+					birthdate=form1.cleaned_data["birthdate"])
+
 				c.save()
 				return redirect("index")
 			context={"form1":form1
@@ -90,7 +94,7 @@ def index(request):
 
 
 
-#-------------------------------------------------GETTING THE PROFILEPIC URL QUERY----------------------------------#
+#---------------------------------------GETTING THE PROFILEPIC URL QUERY----------------------------------#
 		
 
 		profileimgurl=[]
@@ -105,16 +109,6 @@ def index(request):
 			for i in x:
 				if i.profilepic:
 					profileimgurl.append([str(i),i.profilepic.url])
-		print profileimgurl
-
-
-
-
-
-
-
-
-
 
        
 
@@ -162,7 +156,7 @@ def index(request):
 
 
 
-    #  <!---------------------------------------THE PERSON WHO LIKES THE PHOTOS --------------------------------------------> #			
+    #  <!---------------------------------------THE PERSON WHO LIKES THE PHOTOS ---------------------------> #			
 
 		postid=[]
 		dic={}
@@ -183,10 +177,6 @@ def index(request):
 					data.append([k.id,k.username])
 				dic[i]=data
 			data=[]
-	
-
-
-
 
 
 		
@@ -228,7 +218,7 @@ def detail(request,id):
 		a.save()
 		return redirect("detail" ,id)
 
-	# <!-----------------------------------       COLLECTING COMMENTS ------------------------------------------------------> # 
+	# <!---------------------------       COLLECTING COMMENTS --------------------------> # 
 
 	comments=CommentPost.objects.filter(post_id=id) 
 
@@ -264,57 +254,17 @@ def detail(request,id):
 
 
 
-def myprofile(request):
-	query=Person.objects.filter(username=request.user)
-	profilepic=Person.objects.filter(username=request.user)
-	
-	form=ProfileForm(request.POST or None,request.FILES or None)
-	form2=CoverimageForm(request.POST or None,request.FILES or None)
-	if form2.is_valid():
-		if bool(form2.cleaned_data["coverpic"]) == True:
-			pic=Person.objects.get(username=request.user)
-			pic.coverpic=form2.cleaned_data["coverpic"]
-			pic.save()
-	if form.is_valid():
-		if bool(form.cleaned_data["profilepic"]) == True:
-			pic=Person.objects.get(username=request.user)
-			pic.profilepic=form.cleaned_data["profilepic"]
-			pic.save()
-	context={
-	"query":query,
-	"form":form,
-	"profilepic":profilepic,
-	"form2":form2,
-	
-	}
-	return render(request,"profile.html",context)
 
 
 
 
 
-	
-
-
-def profile1(request,pk):
-	query=Person.objects.filter(id=pk)
-	name=query[0]
-	context={
-	"query":query,
-	"name":name,
-	}
-	return render(request,"profile1.html",context)
-
-
-
-
-
-def edit_favorites(request):
-    if request.is_ajax():
-        message = "Yes, AJAX!"
-    else:
-        message = "Not Ajax"
-    return HttpResponse(message)
+# def edit_favorites(request):
+#     if request.is_ajax():
+#         message = "Yes, AJAX!"
+#     else:
+#         message = "Not Ajax"
+#     return HttpResponse(message)
 
 
 # # class index(ListView):

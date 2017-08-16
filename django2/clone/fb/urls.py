@@ -6,6 +6,8 @@ from . import like_unlike
 
 from . import respond_friend_request
 
+from . import profile
+
 
 urlpatterns = [
     # url(r'^facebook/$', views.index,name='index'),
@@ -14,7 +16,6 @@ urlpatterns = [
      
      url(r'^facebook/(?P<id>\d+)/$',views.detail,name='detail'),
      
-     url(r'^myprofile/$', views.myprofile,name='myprofile'),
     
      url(r'^like/(?P<id>\d+)/$',like_unlike.like,name='like'),
      url(r'^unlike/(?P<id>\d+)/$',like_unlike.unlike,name='unlike'),
@@ -23,7 +24,8 @@ urlpatterns = [
      url(r'^facebook/article/(?P<id>\d+)/$',like_unlike.like,name='article'),
 
 
-     url(r'^profile/(?P<pk>\d+)/$',views.profile1,name='profile'),
+     url(r'^profile/(?P<pk>\d+)/$',profile.profile1,name='profile'),
+     url(r'^myprofile/$', profile.myprofile,name='myprofile'),
      
      url(r'^addfriend/(?P<friend>[\w\-]+)/$',respond_friend_request.addfriend,name='addfriend'),
      url(r'^unfriend/(?P<name>[\w\-]+)/$',respond_friend_request.unfriend,name='unfriend'),
@@ -31,7 +33,7 @@ urlpatterns = [
      url(r'^cancelrequest/(?P<name>[\w\-]+)/$',respond_friend_request.cancelrequest,name='cancelrequest'),
      
 
-     url(r'^edit_favorites/', views.edit_favorites,name='edit_facvorites'),
+     #url(r'^edit_favorites/', views.edit_favorites,name='edit_facvorites'),
       ]
 
 
