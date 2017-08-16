@@ -8,7 +8,7 @@ from . models import Person,Post,Connection,LikePost,Addrequest,CommentPost,Logi
 
 
 class PostAdmin(admin.ModelAdmin):
-	list_display=['person','post','timestamp','like']
+	list_display=['person','person_id','post','timestamp','like','comment']
 
 class LikePostAdmin(admin.ModelAdmin):
 	list_display=['post_id','person',]

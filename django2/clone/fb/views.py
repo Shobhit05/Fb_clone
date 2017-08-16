@@ -42,7 +42,9 @@ def index(request):
 
 		if form.is_valid():
 			if bool(form.cleaned_data["post"])==True or bool(form.cleaned_data["image"])==True:
-				c=Post(person=request.user,post=form.cleaned_data["post"],image=form.cleaned_data["image"])
+				c=Post(person=request.user,person_id=request.user.id,
+					post=form.cleaned_data["post"],
+					image=form.cleaned_data["image"])
 				c.save()
 				return redirect("index")
 		query1=[]
@@ -212,10 +214,12 @@ def index(request):
 
 def detail(request,id):
 	commentform=CommentForm(request.POST or None)
+	obj=Post.objects.get(id=id)
 	if commentform.is_valid():
-
 		a=CommentPost(person=request.user,person_id=request.user.id,post_id=id,comment=commentform.cleaned_data["comment"])
 		a.save()
+		obj.comment=obj.comment+1
+		obj.save()
 		return redirect("detail" ,id)
 
 	# <!---------------------------       COLLECTING COMMENTS --------------------------> # 
@@ -224,7 +228,7 @@ def detail(request,id):
 
 
 	
-	obj=Post.objects.get(id=id)
+	
 	like=LikePost.objects.filter(person=request.user)
 	q=Connection.objects.all().filter(user=request.user)
 	liking={}

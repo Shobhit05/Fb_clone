@@ -30,11 +30,13 @@ class Person(models.Model):
 
 class Post(models.Model):
 	person =models.CharField(max_length=120)
+	person_id=models.IntegerField(default=0)
 	post=models.TextField(default='',null=True,blank=True)
 	image=models.FileField(null=True,blank=True)
 	timestamp=models.DateTimeField(auto_now_add=True ,auto_now=False)
 	updated=models.DateTimeField(auto_now_add=False ,auto_now=True)
 	like=models.IntegerField(default=0)
+	comment=models.IntegerField(default=0)
 
 	def __str__(self):
 		return str(self.timestamp)
