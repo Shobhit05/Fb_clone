@@ -1,9 +1,11 @@
+from django.contrib.admin import widgets                                       
 
 from django import forms
 
 from . models import Person,Post
 
 from django.forms.extras.widgets import SelectDateWidget
+
 
 
 class PostForm(forms.Form):
@@ -26,7 +28,6 @@ class ProfileForm(forms.ModelForm):
 
 class CommentForm(forms.Form):
 	comment=forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':22,'style':'resize:none'}),required=False)
-
 
 class CoverimageForm(forms.Form):
 	coverpic=forms.ImageField(required=False)
