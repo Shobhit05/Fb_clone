@@ -164,9 +164,22 @@ Welcome to Facebook
      
      
      {% if i.image %}
+
      
 
-       <h4 style="display:inline;padding-right:08px;"><strong>{{i.person|title}}</strong></h4><h5 style="display: inline;">added a </h5> <a style="display: inline-block;" href= "{{ i.id }}">photo </a>
+       <h4 style="display:inline;padding-right:08px;">
+
+       {% ifnotequal i.person|stringformat:"s" request.user|stringformat:"s" %}
+
+             <a href={% url 'profile' i.person_id %}><strong>{{i.person|title}}</strong></h4></a>
+
+       {%else%}
+              <a href={% url 'myprofile'  %}><strong>{{i.person|title}}</strong></h4></a>
+
+        {%endifnotequal%}
+
+       
+       <h5 style="display: inline;">added a </h5> <a style="display: inline-block;" href= "{{ i.id }}">photo </a>
 
        <h5 style=" padding-left: 200px; display: inline-block;"><strong> {{i.timestamp }}</strong></h5>
 
@@ -192,7 +205,17 @@ Welcome to Facebook
   {%else%}
        
 
-        <h4 style="display: inline; padding-right:08px;"><strong>{{i.person|title}}</strong></h4><h5 style="display: inline;"> posted the  <a href= "{{ i.id }}">post </a> </h5>
+        <h4 style="display: inline; padding-right:08px;">
+         {% ifnotequal i.person|stringformat:"s" request.user|stringformat:"s" %}
+
+             <a href={% url 'profile' i.person_id %}><strong>{{i.person|title}}</strong></h4></a>
+
+       {%else%}
+              <a href={% url 'myprofile'  %}><strong>{{i.person|title}}</strong></h4></a>
+
+        {%endifnotequal%}
+
+        <h5 style="display: inline;"> posted the  <a href= "{{ i.id }}">post </a> </h5>
 
         <h5 style=" padding-left: 200px; display: inline-block;"><strong> {{i.timestamp }}</strong></h5>
     
@@ -216,7 +239,20 @@ Welcome to Facebook
 {%else %}
 
 
-       <h4 style="display: inline; padding-right:08px;"><strong>{{i.person|title}}</strong></h4><h5 style="display: inline;">added a new  <a href= "{{ i.id }}">photo </a> </h5>
+       <h4 style="display: inline; padding-right:08px;">
+
+        {% ifnotequal i.person|stringformat:"s" request.user|stringformat:"s" %}
+
+             <a href={% url 'profile' i.person_id %}><strong>{{i.person|title}}</strong></h4></a>
+
+       {%else%}
+              <a href={% url 'myprofile'  %}><strong>{{i.person|title}}</strong></h4></a>
+
+        {%endifnotequal%}
+
+
+       <h5 style="display: inline;">added a new  <a href= "{{ i.id }}">photo </a> </h5>
+
         <h5 style=" padding-left: 170px; display: inline-block;"><strong> {{i.timestamp }}</strong></h5>
        
 
