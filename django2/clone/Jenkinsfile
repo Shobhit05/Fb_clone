@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("django2/clone")
+        app = docker.build("Social-Network/django2/clone/")
     }
 
     stage('Test image') {
