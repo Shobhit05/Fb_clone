@@ -14,7 +14,7 @@ node {
         docker.withRegistry('https://hub.docker.com/r/shobhit2222/docker_jenkins/', 'docker-hub-credentials') {
             /* app.push("${env.BUILD_NUMBER}") 
             app.push("latest") */
-            app = docker.build("docker_jenkins","-f django2/clone/Dockerfile .") 
+            app = docker.build("r/shobhit2222/docker_jenkins/","-f django2/clone/Dockerfile .") 
             app.push()
         }
 
