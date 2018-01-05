@@ -1,7 +1,7 @@
 node {
     checkout scm
 
-    docker.withRegistry('https://registry.hub.docker.com', 'credentials-id') {
+    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
 
         def customImage = docker.build("db", "-f django2/clone/Dockerfile .")
 
