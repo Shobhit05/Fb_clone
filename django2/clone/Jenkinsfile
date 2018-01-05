@@ -1,25 +1,11 @@
 node {
-    def app
+    checkout scm
 
-    stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace */
+    docker.withRegistry('https://registry.hub.docker.com', 'credentials-id') {
 
-        checkout scm
+        def customImage = docker.build("db", "-f django2/clone/Dockerfile .")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
     }
-
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-        
-        docker.withRegistry('https://hub.docker.com/r/shobhit2222/docker_jenkins/', 'docker-hub-credentials') {
-            /* app.push("${env.BUILD_NUMBER}") 
-            app.push("latest") */
-            app = docker.build("r/shobhit2222/docker_jenkins","-f django2/clone/Dockerfile .") 
-            app.push()
-        }
-
-      
 }
-
-}
-
