@@ -1,14 +1,4 @@
-/* node {
-    checkout scm
 
-    docker.withRegistry('https://shobhit2222/', 'docker-hub-credentials') {
-
-        def customImage = docker.build("db:${env.BUILD_ID}", "-f django2/clone/Dockerfile .")
-
-        /* Push the container to the custom Registry */
-       /*  customImage.push()
-    }
-} */
  {
     def app
 
