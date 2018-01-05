@@ -12,7 +12,7 @@
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("socialNetwork", "-f django2/clone/Dockerfile .")
+        app = docker.build("socialnetwork", "-f django2/clone/Dockerfile .")
     }
 
     stage('Test image') {
