@@ -5,11 +5,7 @@ FEATURES -->
   2->POST your status,pictures.
   3->NEWS FEED.
   4->ADD CONNECTIONS and Like their post.
+  5->Now You can comment on the post.
+  6->See the Uses List who likes your post.
 
-UPDATED FEATURES-->
-   1->Now You can comment on the post.
-   2->See the Uses List who likes your post.
-
-UPCOMING FEATURE -->
-   1->Get the notifications
 
