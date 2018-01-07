@@ -6,6 +6,6 @@ FEATURES -->
   3->NEWS FEED.
   4->ADD CONNECTIONS and Like their post.
   5->Now You can comment on the post.
-  6->See the Uses List who likes your post.
+  6->See the Users List who liked your post.
 
 
